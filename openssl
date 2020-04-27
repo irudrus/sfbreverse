@@ -1,0 +1,3 @@
+openssl pkcs12 -in "C:\Cert\STAR_contoso9_ru.pfx" -nocerts -out "C:\Cert\contoso9.key"
+openssl pkcs12 -in "C:\Cert\STAR_contoso9_ru.pfx" -clcerts -nokeys -out "C:\Cert\contoso9.crt"
+openssl rsa -in "C:\Cert\contoso9.key" -out "C:\Cert\contoso9open.key"

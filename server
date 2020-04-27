@@ -1,0 +1,42 @@
+server {
+
+ listen 192.168.200.198:443 ssl;  
+
+ server_name meet.contoso9.ru dialin.contoso9.ru webext.contoso9.ru lyncdiscover.contoso9.ru;
+
+ 
+ ssl_certificate /etc/keys/contoso9.crt;
+ ssl_certificate_key /etc/keys/contoso9.key;
+ access_log  /var/log/nginx/webext.access.log;
+ 
+  location / {
+ 
+  
+  proxy_http_version  1.1;
+  proxy_set_header  Connection "";
+  proxy_read_timeout 3600;
+  proxy_buffering  on;
+  proxy_buffers  128 4k;
+  proxy_set_header Host $host;
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header X-Forwarded-Proto $scheme;
+
+
+  proxy_pass   https://sfb_backend_443;
+  proxy_redirect   default;
+ }
+}
+
+
+server {
+    listen 192.168.200.198:80;
+    server_name  "";
+    location / {
+        root /var/www/webext.atservers.net;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Server $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass http://sfb_backend_80;
+    }
+}

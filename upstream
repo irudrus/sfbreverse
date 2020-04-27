@@ -1,0 +1,7 @@
+upstream sfb_backend_80 {
+    server sfb-std1.contoso9.ru:8080;
+ }
+ 
+ upstream sfb_backend_443 {
+    server sfb-std1.contoso9.ru:443;
+ }
